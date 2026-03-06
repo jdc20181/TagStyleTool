@@ -1,0 +1,12 @@
+tag_icon_list:
+  type: list
+  default: "tag1,circle-question,#CC0000|"
+
+enable_colors_for_tag_labels:
+  type: bool
+  default: false
+
+svg_icons:
+  type: list
+  list_type: compact
+  default: "circle-question"
