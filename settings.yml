@@ -1,10 +1,25 @@
 tag_icon_list:
   type: list
-  default: "tag1,circle-question,#CC0000|"
+  default: "tag1,tag,#CC0000|"
 
 enable_colors_for_tag_labels:
   type: bool
   default: false
+
+remove_dashes_from_tags:
+  type: bool
+  default: true
+  description: "Takes the dashes out of the tag names"
+
+enable_default_tag_icon:
+  type: bool
+  default: true
+  description: "Enable the use of a default icon for tags without a specific icon. If enabled, and nothing is present in the default_tag_icon setting, the 'tag' icon will be used as the default."
+
+default_tag_icon:
+  type: list
+  default: "tag"
+  description: "Default icon to use for tags without a specific icon."
 
 svg_icons:
   type: list
