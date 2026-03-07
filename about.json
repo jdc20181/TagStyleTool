@@ -3,7 +3,7 @@
   "component": true,
   "license_url": "https://github.com/jdc20181/TagStyleTool/blob/main/LICENSE",
   "about_url": null,
-  "authors": ["jdc20181"],
+  "authors": "jdc20181",
   "theme_version": "0.1.0",
   "minimum_discourse_version": null,
   "maximum_discourse_version": null,
