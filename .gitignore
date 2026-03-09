@@ -13,4 +13,4 @@ __pycache__/
 *.sublime-project
 # Ignore OS-specific files
 Thumbs.db
-beta/*
+/beta/

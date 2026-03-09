@@ -2,7 +2,8 @@
   margin-right: 4px;
 }
 
-@if $enable_colors_for_tag_labels == "true" {
+@if variable-exists(enable_colors_for_tag_labels) and
+  $enable_colors_for_tag_labels == "true" {
   .discourse-tag--tag-icons-style {
     &.simple {
       color: var(--color1, var(--tag-text-color));
@@ -74,4 +75,96 @@
       color: var(--color2, var(--primary-high));
     }
   }
+}
+
+.tag-style-tool-builder {
+  position: relative;
+  margin: 12px 0;
+  z-index: 1;
+}
+
+.tag-style-tool-builder__trigger {
+  box-shadow: var(--shadow-elevation-low);
+}
+
+.tag-style-tool-builder__panel {
+  position: relative;
+  margin-top: 8px;
+  width: min(100%, 420px);
+  border: 1px solid var(--primary-low-mid);
+  border-radius: 8px;
+  background: var(--secondary);
+  box-shadow: var(--shadow-elevation-medium);
+  padding: 12px;
+}
+
+.tag-style-tool-builder__row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+
+  label {
+    font-size: var(--font-down-1);
+    color: var(--primary-medium);
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+  }
+}
+
+.tag-style-tool-builder__icon-input-wrap {
+  display: flex;
+  gap: 6px;
+
+  .tag-style-tool-builder__icon {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+.tag-style-tool-builder__icon-browser {
+  margin-top: 6px;
+  padding: 8px;
+  border: 1px solid var(--primary-low-mid);
+  border-radius: 6px;
+  background: var(--secondary-very-low);
+}
+
+.tag-style-tool-builder__icon-search-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.tag-style-tool-builder__icon-search-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 8px;
+  max-height: 180px;
+  overflow: auto;
+}
+
+.tag-style-tool-builder__icon-result {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tag-style-tool-builder__actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.tag-style-tool-builder__status {
+  margin-top: 8px;
+  min-height: 1.25em;
+  color: var(--primary-medium);
+  font-size: var(--font-down-1);
 }

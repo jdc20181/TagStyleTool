@@ -1,6 +1,7 @@
 tag_icon_list:
   type: list
   default: "tag1,tag,#CC0000|"
+  description: "The format is tagname,icon,hexcolor if you use the tagstylebuilder it will generate for you."
 
 enable_colors_for_tag_labels:
   type: bool
@@ -24,4 +25,20 @@ default_tag_icon:
 svg_icons:
   type: list
   list_type: compact
-  default: "circle-question"
+  default: "tag|circle-question"
+  description: "For this component to work properly, you have to put the icon in this field. You can use the VisualStyleBuilderTool to get the proper names."
+
+enable_icon_search_in_style_builder:
+  type: bool
+  default: true
+  description: "Enable Font Awesome GraphQL icon search in the Style Builder."
+
+font_awesome_graphql_version:
+  type: string
+  default: "7.x"
+  description: "Font Awesome version used for GraphQL icon search."
+
+font_awesome_graphql_endpoint:
+  type: string
+  default: "https://api.fontawesome.com"
+  description: "Font Awesome GraphQL endpoint for icon search."
