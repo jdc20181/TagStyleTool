@@ -659,6 +659,30 @@ function mountTagStyleBuilder(api) {
   };
 
   mountInlineWithRetries();
+  let pendingRemountFrame = null;
+  const scheduleEnsureMounted = () => {
+    if (pendingRemountFrame) {
+      return;
+    }
+
+    pendingRemountFrame = requestAnimationFrame(() => {
+      pendingRemountFrame = null;
+      if (isBuilderRoute() && !root.isConnected) {
+        mountInlineWithRetries();
+      }
+    });
+  };
+
+  const mountObserver = new MutationObserver(() => {
+    if (!isBuilderRoute() || root.isConnected) {
+      return;
+    }
+    scheduleEnsureMounted();
+  });
+  if (document.body) {
+    mountObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
   const nameInput = panel.querySelector(".tag-style-tool-builder__name");
   const iconInput = panel.querySelector(".tag-style-tool-builder__icon");
   const iconBrowseButton = panel.querySelector(
@@ -1024,15 +1048,26 @@ export default apiInitializer((api) => {
     iconContainer.style.color = "inherit";
     tagElement.classList.add("discourse-tag--tag-icons-style");
     tagElement.classList.add("discourse-tag--unified-icon");
-    tagElement.style.setProperty("--color1", colorToUse);
-    tagElement.style.setProperty("--color2", contrastColor(colorToUse));
     tagElement.prepend(iconContainer);
 
     if (enableColors && colorToUse) {
+      tagElement.style.setProperty("--color1", colorToUse);
+      tagElement.style.setProperty("--color2", contrastColor(colorToUse));
       tagElement.style.backgroundColor = colorToUse;
       const contrast = contrastColor(colorToUse) || "#fff";
       tagElement.style.color = contrast;
       iconContainer.style.color = contrast;
+    } else {
+      tagElement.style.removeProperty("--color1");
+      tagElement.style.removeProperty("--color2");
+      tagElement.style.removeProperty("background-color");
+      if (colorToUse) {
+        tagElement.style.color = colorToUse;
+        iconContainer.style.color = colorToUse;
+      } else {
+        tagElement.style.removeProperty("color");
+        iconContainer.style.removeProperty("color");
+      }
     }
 
     return tagElement.outerHTML;

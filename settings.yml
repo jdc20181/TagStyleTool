@@ -26,7 +26,7 @@ svg_icons:
   type: list
   list_type: compact
   default: "tag|circle-question"
-  description: "For this component to work properly, you have to put the icon in this field. You can use the VisualStyleBuilderTool to get the proper names."
+  description: "For this component to work properly, you have to put the icon in this field. You can use the VisualStyleBuilderTool to get the proper names. IF the icon still isn't viisble you need to go to site settings and add it to the SVG Subset."
 
 enable_icon_search_in_style_builder:
   type: bool
