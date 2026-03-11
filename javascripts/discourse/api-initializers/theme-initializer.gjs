@@ -397,7 +397,7 @@ async function searchFontAwesomeIconsGraphQL(queryText, options = {}) {
     return [];
   }
 
-  const version = String(options.version || "7.x").trim() || "7.x";
+  const version = String(options.version || "6.7.2").trim() || "6.7.2";
   const first = Number(options.first || 30) || 30;
 
   const requestBody = {
@@ -406,6 +406,16 @@ async function searchFontAwesomeIconsGraphQL(queryText, options = {}) {
         search(version: $version, query: $query, first: $first) {
           id
           label
+          familyStylesByLicense {
+            free {
+              family
+              style
+            }
+            pro {
+              family
+              style
+            }
+          }
         }
       }
     `,
@@ -437,7 +447,25 @@ async function searchFontAwesomeIconsGraphQL(queryText, options = {}) {
     const matches = Array.isArray(payload?.data?.search)
       ? payload.data.search
       : [];
+
+    const isClassicIcon = (item) => {
+      const byLicense = item?.familyStylesByLicense;
+      const familyStyles = [
+        ...(Array.isArray(byLicense?.free) ? byLicense.free : []),
+        ...(Array.isArray(byLicense?.pro) ? byLicense.pro : []),
+      ];
+
+      if (!familyStyles.length) {
+        return true;
+      }
+
+      return familyStyles.some(
+        (familyStyle) => normalizeLookupKey(familyStyle?.family) === "classic"
+      );
+    };
+
     const names = matches
+      .filter((item) => isClassicIcon(item))
       .map((item) => normalizeIconName(item?.id))
       .filter(Boolean);
 
@@ -462,7 +490,7 @@ function mountTagStyleBuilder(api) {
   root.className = "tag-style-tool-builder";
   const enableIconSearch = !!settings.enable_icon_search_in_style_builder;
   const iconSearchVersion =
-    String(settings.font_awesome_graphql_version || "7.x").trim() || "7.x";
+    String(settings.font_awesome_graphql_version || "6.7.2").trim() || "6.7.2";
   const iconSearchEndpoint =
     String(
       settings.font_awesome_graphql_endpoint || "https://api.fontawesome.com"
@@ -667,14 +695,19 @@ function mountTagStyleBuilder(api) {
 
     pendingRemountFrame = requestAnimationFrame(() => {
       pendingRemountFrame = null;
-      if (isBuilderRoute() && !root.isConnected) {
+      if (!isBuilderRoute()) {
+        return;
+      }
+
+      mountInline();
+      if (!root.isConnected) {
         mountInlineWithRetries();
       }
     });
   };
 
   const mountObserver = new MutationObserver(() => {
-    if (!isBuilderRoute() || root.isConnected) {
+    if (!isBuilderRoute()) {
       return;
     }
     scheduleEnsureMounted();

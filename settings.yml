@@ -35,8 +35,8 @@ enable_icon_search_in_style_builder:
 
 font_awesome_graphql_version:
   type: string
-  default: "7.x"
-  description: "Font Awesome version used for GraphQL icon search."
+  default: "6.7.2"
+  description: "Font Awesome version used for GraphQL icon search. Recommended: 6.7.2 for Discourse classic icon compatibility."
 
 font_awesome_graphql_endpoint:
   type: string
