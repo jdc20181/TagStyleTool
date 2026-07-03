@@ -565,7 +565,8 @@ function mountTagStyleBuilder(api) {
     const path = String(window?.location?.pathname || "");
     return (
       path.includes("/admin/customize/components/") ||
-      path.includes("/admin/config/customize/components/")
+      path.includes("/admin/config/customize/components/") ||
+      path.includes("/admin/customize/themes/")
     );
   };
 
